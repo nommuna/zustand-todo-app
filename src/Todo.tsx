@@ -1,4 +1,5 @@
 import React from 'react'
+import shallow from 'zustand/shallow'
 import AddBoxIcon from '@mui/icons-material/AddBox'
 import { Grid, Paper, Typography, IconButton, Divider } from '@mui/material'
 import { useTodoStore } from './Store/store'
@@ -7,8 +8,7 @@ import { TodoModal } from './TodoModal'
 
 export const Todo = () => {
     const openModal = useTodoStore(state => state.openTodoModal)
-    const modal = useTodoStore(state => state.todoModal)
-    const todos = useTodoStore(state => state.todos)
+    const { modal, todos } = useTodoStore(state => ({ modal: state.todoModal, todos: state.todos}), shallow)
 
     return (
         <>
