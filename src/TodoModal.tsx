@@ -1,12 +1,12 @@
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material'
 import React from 'react'
 import { useState } from 'react'
-import { useTodoStore } from './Store/store'
+import { useStore } from './Store/store'
 import shallow from 'zustand/shallow'
 
 export const TodoModal = () => {
     const [todoText, setTodoText] = useState("")
-    const { modal, closeModal, addTodo } = useTodoStore(state => ({ modal: state.todoModal, closeModal: state.openTodoModal, addTodo: state.addTodo }), shallow)
+    const { modal, closeModal, addTodo } = useStore(state => ({ modal: state.todoModal, closeModal: state.openTodoModal, addTodo: state.addTodo }), shallow)
 
 
     return (

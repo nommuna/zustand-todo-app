@@ -2,23 +2,23 @@ import React from 'react'
 import shallow from 'zustand/shallow'
 import AddBoxIcon from '@mui/icons-material/AddBox'
 import { Grid, Paper, Typography, IconButton, Divider } from '@mui/material'
-import { useTodoStore } from './Store/store'
+import { useStore } from './Store/store'
 import { TodoItem } from './TodoItem'
 import { TodoModal } from './TodoModal'
 
 export const Todo = () => {
-    const openModal = useTodoStore(state => state.openTodoModal)
-    const { modal, todos } = useTodoStore(state => ({ modal: state.todoModal, todos: state.todos}), shallow)
+    const openModal = useStore(state => state.openTodoModal)
+    const { modal, todos } = useStore(state => ({ modal: state.todoModal, todos: state.todos}), shallow)
 
     return (
         <>
             <Grid container justifyContent="center" sx={{ paddingTop: '50px' }}>
                 <Grid item>
-                    <Paper elevation={3} sx={{ backgroundColor: '#272727', minHeight: '600px', width: '800px' }}>
-                        <Grid container spacing={2} justifyContent='center'>
+                    <Paper elevation={3} sx={{ backgroundColor: '#272727', maxHeight: '600px', width: '800px', overflow: 'scroll' }}>
+                        <Grid container spacing={2} justifyContent='center' alignItems="center">
                             <Grid item xs={10}>
                                 <Typography variant="h3" textAlign='center' sx={{ color: '#BC6FF1' }}>
-                                    My Todo
+                                    Todo
                                 </Typography>
                             </Grid>
                             <Grid item>

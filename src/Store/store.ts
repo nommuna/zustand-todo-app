@@ -1,4 +1,4 @@
-import create from 'zustand'
+import create, {SetState} from 'zustand'
 import { v4 as uuidv4 } from 'uuid'
 
 export type Todo = {
@@ -10,14 +10,27 @@ type TodoState = {
     todos: Todo[]
     addTodo: (text: string) => void
     deleteTodo: (id: string) => void
+}
+
+type ModalState = {
     todoModal: boolean
     openTodoModal: (open: boolean) => void
 }
 
-export const useTodoStore = create<TodoState>(set => ({
+type StoreState = TodoState & ModalState
+
+const createTodoSlice = (set: SetState<StoreState>) => ({
     todos: [],
+    addTodo: (description: string) => set(prevState => ({todos: [...prevState.todos, {id: uuidv4(), description } ]})),
+    deleteTodo: (id: string) => set(prevState => ({todos: prevState.todos.filter((todo) => todo.id !== id) })),
+})
+
+const createModalSlice = (set: SetState<StoreState>) => ({
     todoModal: false,
-    addTodo: (description) => set(state => ({todos: [...state.todos, {id: uuidv4(), description } ]})),
-    deleteTodo: (id) => set(state => ({todos: state.todos.filter((todo) => todo.id !== id) })),
-    openTodoModal: (open) => set(state => ({todoModal: !state.todoModal}))
-}))
+    openTodoModal: () => set(prevState => ({todoModal: !prevState.todoModal}))
+})
+
+export const useStore = create<TodoState & ModalState>((set) => ({
+      ...createTodoSlice(set),
+      ...createModalSlice(set)
+  }));
